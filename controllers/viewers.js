@@ -80,7 +80,77 @@ const getViewers = async(req=request,res=response)=>{
             conn.end()
         }
     }
+
+
+}
+
+// Ver usuario por ID
+const getViewersID = async (req=request,res=response)=>{
+    const {id}=req.params
+    let conn;
+
+    try{
+        conn = await pool.getConnection()
+        const [cliente]= await conn.query(modeloViewers.getViewersID,[id],(error)=>{throw new error})
+        if(!cliente){
+            res.status(404).json({msg:`No se encontró cliente con el ID=${id}`})
+            return
+        }
+        res.json({cliente})
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error})
+    }finally{
+        if(conn){
+            conn.end()
+        }
+    }
 }
 
 
-module.exports = {addViewers, getViewers}
+// Iniciar sesion
+const sessionViewers = async (req=request,res=response)=>{
+    const {
+        Correo,
+        Contrasena
+    }=req.body
+
+    if(
+        !Correo||
+        !Contrasena
+    ){
+        res.status(400).json({msg:"Falta información del cliente."})
+        return
+    }
+
+    let conn;
+
+    try{
+        conn = await pool.getConnection()
+        const [cliente]=await conn.query(modeloViewers.infoViewers,[Correo])
+
+        if(!cliente || cliente.Activo == 'N'){
+            let code = !cliente ? 1: 2;
+            res.status(403).json({msg:`El correo o la contraseña son incorrectos`,errorCode:code})
+            return
+        }
+
+        const accesoValido = bcryptjs.compareSync(Contrasena,cliente.Contrasena)
+
+        if(!accesoValido){
+            res.status(403).json({msg:`El correo o la contraseña son incorrectos`,errorCode:"3"})
+            return
+        }
+        res.json({msg:`El cliente ${Correo} ha iniciado seción satisfactoriamenente`})
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error})
+    }finally{
+        if(conn){
+            conn.end()
+        }
+    }
+}
+
+
+module.exports = {addViewers, getViewers, getViewersID, sessionViewers}

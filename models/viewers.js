@@ -22,7 +22,9 @@ const modeloViewers = {
         ?,
         ?,
         ?
-    )`
+    )`,
+    sessionViewers : `SELECT Correo, Contrasena, Activo FROM viewers WHERE Correo = ?`,
+    infoViewers : `SELECT Correo,Contrasena,Telefono,Forma_Pago,Plan,Fecha_Facturacion,Plan_Activo,Activo FROM viewers WHERE Correo = ?`
 }
 
 module.exports = modeloViewers

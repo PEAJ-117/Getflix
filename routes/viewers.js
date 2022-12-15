@@ -1,11 +1,13 @@
 const {Router} = require("express")
-const {agregarViewers, sessionViewers} = require("../controllers/viewers")
+const {addViewers, getViewers} = require("../controllers/viewers")
 const router = Router()
 
-//http://localhost:3000/getflix/viewers
+/*  http://localhost:3000/getflix/viewers  */
 
 //POST
-router.post("/",agregarViewers)
-router.post("/login",sessionViewers)
+router.post("/",addViewers)
+
+// GET
+router.get("/",getViewers)
 
 module.exports = router

@@ -1,9 +1,9 @@
 const modeloViewers = {
-    consultaViewers: "SELECT * FROM viewers",
-    consultaViewersID : `SELECT * FROM viewers WHERE ID=?`,
-    eliminarViewersID : `UPDATE viewers SET Activo='N' WHERE ID=?`,
-    clienteExiste : `SELECT Correo FROM viewers WHERE Correo = ?`,
-    agregarViewers:
+    
+    viewerExist :
+    `SELECT Correo FROM viewers WHERE Correo = ?`,
+    
+    addViewers:
     `INSERT INTO viewers(
         Correo,
         Contrasena,
@@ -23,8 +23,8 @@ const modeloViewers = {
         ?,
         ?
     )`,
-    sessionViewers : `SELECT Correo, Contrasena, Activo FROM viewers WHERE Correo = ?`,
-    infoViewers : `SELECT Correo,Contrasena,Telefono,Forma_Pago,Plan,Fecha_Facturacion,Plan_Activo,Activo FROM viewers WHERE Correo = ?`
+
+    getViewers: "SELECT * FROM viewers"
 }
 
 module.exports = modeloViewers

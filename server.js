@@ -8,6 +8,7 @@ class Server{
         this.app = express()
         this.paths ={
             viewers:"/getflix/viewers",
+            movies: "/getflix/movies",
         }
         this.middlewares()
         this.routes()
@@ -20,6 +21,7 @@ class Server{
     }
 
     routes(){      
+        this.app.use(this.paths.viewers, viewersRouter)
         this.app.use(this.paths.viewers, viewersRouter)
     }
     

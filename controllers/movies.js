@@ -1,6 +1,5 @@
 const { request, response } = require("express");
-const pool=require("../db/connection");
-const modeloCinta = require("../models/cinta");
+const pool=require("../mariadb/db_conn");
 const modelMovies = require("../models/movies");
 
 const getMovies = async(req=request,res=response)=>{

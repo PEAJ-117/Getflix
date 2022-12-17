@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require("cors")
 const viewersRouter = require('./routes/viewers')
+const moviesRouter = require('./routes/movies')
+const favRouter = require('./routes/fav')
 
 
 class Server{
@@ -9,6 +11,7 @@ class Server{
         this.paths ={
             viewers:"/getflix/viewers",
             movies: "/getflix/movies",
+            fav: "/getflix/fav"
         }
         this.middlewares()
         this.routes()
@@ -22,7 +25,8 @@ class Server{
 
     routes(){      
         this.app.use(this.paths.viewers, viewersRouter)
-        this.app.use(this.paths.viewers, viewersRouter)
+        this.app.use(this.paths.movies, moviesRouter)
+        this.app.use(this.paths.fav, favRouter)
     }
     
     middlewares(){
